@@ -1,0 +1,19 @@
+{
+  "name": "carpoolingtec-sever",
+  "version": "1.0.0",
+  "description": "API_REST_SERVER",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/espeis2019/CarPoolingTEC-Sever.git"
+  },
+  "author": "Crisptofer Fernández Fernández",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/espeis2019/CarPoolingTEC-Sever/issues"
+  },
+  "homepage": "https://github.com/espeis2019/CarPoolingTEC-Sever#readme"
+}
