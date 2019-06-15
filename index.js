@@ -1,68 +1,103 @@
 'use strict'
 
-/* Para correrlo con nodemon se corre:
-npm start */
+const express = require("express");
+const bodyParser = require("body-parser");
+const server = express();
 
-//Const=constante
-//body-parser sirve para leer el cuerpo de peticiones tipo post
-//Express se le agregan capas con librerias para agregar funcionalidades
-//nodemon sirve para actualizar las modificaciones al server sin tener que pararlo
+server.use(bodyParser.urlencoded({extended:false}));
+server.use(bodyParser.json());
 
-/* Import express */
-const express = require('express')
+const get = require("./routes/get")
+const posts = require("./routes/posts");
+const create = require("./routes/create");
+const update = require("./routes/update");
+const destroy = require("./routes/destroy");
 
-/*Import body-parser*/
-const bodyParser = require('body-parser')
+//manage CORS
+//to avoid CORS problems, we need to pass the next headers
+server.use((req, res, next)=>{
+    //we say what we want to allow, you can whitelist IPs here or domains
+    res.header("Access-Control-Allow-Origin", "*"); 
+    //what kind of headers we are allowing
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");  
 
-/* Instanciar una variable tipo express que funciona para inicializar el server */
-const app = express()
+    //check for the options request from browsers
+    //this will always be sent
+    if(req.method === "OPTIONS"){
+        //tell the browser what he can ask for
+        res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+        //we just respond with OK status code
+        return res.status(200).json({
+            "statusMessage": "ok"
+        });
+    }
+   
+    next();
+});
 
-/* Definición del puerto mediante variable de entorno o 3000 por defecto*/
-const port = process.env.PORT || 3000 
 
-/*  */
-app.use(bodyParser.urlencoded({ extended: false}))
-/* Para poder admitir peticiones en formato json */
-app.use(bodyParser.json())
+//routes
+server.use("/api/", get);
+server.use("/api/", create);
+server.use("/api/", posts);
+server.use("/api/", update);
+server.use("/api/", destroy);
 
-/* Escucha a la URI definida por una petición, :param es un parametro de entrada 
-req = reques
-res = response*/
-
-/*app.get('/api/:param', (req, res) => {
-    //Se manda un Json
-    res.send({message:`Funciona ${req.params.param}!`})
-})*/
-
-app.get('/api/product', (req, res) => {
-    res.status(200).send({products: ['la ni', 'la pinta', 'la santa maria']})
+server.use((req,res,next)=>{
+    const error = new Error("Unable to manage the request");
+    //send a status code error
+    error.status= 404;
+    //forward the request with the error
+    next(error);
 })
 
-app.get('/api/product/:productID', (req, res) => {
-    
+//------------- error message
+server.use((error, req, res, next)=>{
+    res.status(error.status || 500);
+    res.json({
+        "error": {
+            "message": error.message
+        }
+    })
+});
+
+
+//listen function for Node / express
+server.listen(3000, ()=>{
+    console.log("The server is running");
 })
 
 
-app.post('/api/product', (req, res) => {
-    console.log(req.body)
-    res.status(200).send({message: 'se recibió la merca'})
-})
 
-app.put('/api/product/:productID', (req, res) => {
-    
-})
+/*
+const path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-app.delete('/api/product/:productID', (req, res) => {
-    
-})
+const app = express();
+const routes = require('./routes/index.js');
 
+// db settings
 
-/* Inicializar el puerto y poner a correr el server
-console.log sirve para hacer prints. ${variable} funciona para 
-agregar variables a string*/
+// settings
+//app.set('view engine', 'ejs');
+//app.set('views', path.join(__dirname, 'views'));
+app.set('port', process.env.PORT || 3000);
 
-/* () => == function () */
+// middlewares
+app.use((req, res, next) => {
+	console.log(`${req.url} - ${req.method}`);
+	next();
+});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
-app.listen(port, () => {
-    console.log(`Está corriendo el server cabrón en Http://localhost:${port}`)
-})
+// routes
+app.use(routes);
+
+// satic files, front-end files
+//app.use(express.static(path.join(__dirname, 'public')));
+
+// bootstraping the app
+app.listen(3000, () => console.log('server on port 3000'));
+*/
