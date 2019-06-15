@@ -1,33 +1,28 @@
 const express = require("express");
 const route = express.Router();
 
-const Post = require("../model/Post");
+const Administrador = require("../model/Administrador");
 
-route.put("/update/:id", (req, res, next) => {
-   let newTitle = req.body.title;
-   let newContent = req.body.content;
-   
-   let values = {title: newTitle,  content: newContent};
-   let selector = {
-       where: {id: req.params.id}
-   }
-   Post.update(values, selector)
-   .then((updatedPost)=>{
-       console.log(updatedPost);
-       res.json({
-           "message": updatedPost
-       })
-   })
-   .catch(err => {
-       res.json({
-           "message": err
-       })
-   })
+/* ---------------------- Administrator ------------------------- */
 
-}); 
-   
+route.put('/admin/:id', (req, res, next) => {
+    if(!req.body.IdPasajero){
+        res.status(400)
+        res.json({
+            error: 'Bad Data'
+        })
+    } else {
+        Administrador.update(
+            {IdPasajero: req.body.IdPasajero},
+            {where: {IdAdmin: req.params.id} }
+        )
+        .then(() => {
+            res.json({ status: 'Resource Updated'})
+        })
+        .error(err => handleError(err))
+    }
+})
 
 
- 
- 
+
 module.exports = route;

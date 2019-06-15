@@ -4,7 +4,7 @@ const connection = require("../config/config.js");
 
 //the model is used to make the columns on the database
 //once you run the application server
-const Administrador = connection.define(
+const Administrador = connection.sequelize.define(
   'Administrador', 
   {
     IdAdmin:{

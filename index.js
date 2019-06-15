@@ -7,11 +7,11 @@ const server = express();
 server.use(bodyParser.urlencoded({extended:false}));
 server.use(bodyParser.json());
 
+
 const get = require("./routes/get")
-const posts = require("./routes/posts");
-const create = require("./routes/create");
-const update = require("./routes/update");
-const destroy = require("./routes/destroy");
+const create = require("./routes/create")
+const update = require("./routes/update")
+const del = require("./routes/delete")
 
 //manage CORS
 //to avoid CORS problems, we need to pass the next headers
@@ -39,9 +39,8 @@ server.use((req, res, next)=>{
 //routes
 server.use("/api/", get);
 server.use("/api/", create);
-server.use("/api/", posts);
 server.use("/api/", update);
-server.use("/api/", destroy);
+server.use("/api/", del);
 
 server.use((req,res,next)=>{
     const error = new Error("Unable to manage the request");
@@ -61,10 +60,13 @@ server.use((error, req, res, next)=>{
     })
 });
 
+const port = process.env.PORT || 3000 
+//Decorative
+const URL = 'http://localhost:'
 
 //listen function for Node / express
-server.listen(3000, ()=>{
-    console.log("The server is running");
+server.listen(port, () => {
+    console.log(`Server is running in ${URL}${port}`)
 })
 
 
