@@ -12,6 +12,7 @@ const get = require("./routes/get")
 const create = require("./routes/create")
 const update = require("./routes/update")
 const del = require("./routes/delete")
+const main = require("./routes/main")
 
 //manage CORS
 //to avoid CORS problems, we need to pass the next headers
@@ -41,6 +42,7 @@ server.use("/api/", get);
 server.use("/api/", create);
 server.use("/api/", update);
 server.use("/api/", del);
+server.use("/",main);
 
 server.use((req,res,next)=>{
     const error = new Error("Unable to manage the request");
