@@ -4,8 +4,7 @@
   "description": "API_REST_SERVER",
   "main": "index.js",
   "scripts": {
-    "start": "index.js",
-    "server": "nodemon index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,8 +23,5 @@
     "express": "^4.17.1",
     "mysql2": "^1.6.5",
     "sequelize": "^5.8.9"
-  },
-  "devDependencies": {
-    "nodemon": "^1.19.1"
   }
 }
