@@ -1,0 +1,74 @@
+
+//Ingresar, POST
+
+/api/ingresar/:t
+{
+	"coc":2016081117,
+	"pass": "Nano13"
+}
+
+//Registrar, POST
+
+/api/registrar
+{
+	"CEDULA": 62730486,
+	"CARNET": 1994048657,
+	"NOMBRE": "Angela",
+	"APELLIDO": "Fernandez",
+	"CORREO": "angelafd33@gmail.com",
+	"CONTRASENA": "joel"
+}
+
+//Editar Perfil
+
+/api/editarp/:id
+
+{
+	"NOMBRE": "Angela",
+	"APELLIDO": "Fernandez",
+	"CORREO": "angelafd33@gmail.com",
+	"CONTRASENA": "joel"
+}
+
+//Lista solicitudes
+
+/api/listasolicitudes/:id
+
+[
+    {
+        "IdAmigo": 4,
+        "Nombre": "Juan",
+        "Apellido": "Esquivel"
+    }
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

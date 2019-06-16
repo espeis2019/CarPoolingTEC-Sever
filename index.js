@@ -9,8 +9,8 @@ server.use(bodyParser.json());
 
 
 const get = require("./routes/get")
-const create = require("./routes/create")
-const update = require("./routes/update")
+const post = require("./routes/post")
+const put = require("./routes/put")
 const del = require("./routes/delete")
 const main = require("./routes/main")
 
@@ -39,8 +39,8 @@ server.use((req, res, next)=>{
 
 //routes
 server.use("/api/", get);
-server.use("/api/", create);
-server.use("/api/", update);
+server.use("/api/", post);
+server.use("/api/", put);
 server.use("/api/", del);
 server.use("/",main);
 

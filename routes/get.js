@@ -3,6 +3,7 @@ const express = require("express");
 const route = express.Router();
 
 const Administrador = require("../model/Administrador");
+const NombreSolicitud = require("../model/nomSolicitud")
 
 
 
@@ -39,6 +40,23 @@ route.get("/admin/:id", (req, res, next) => {
 });
 
 
-/* -------------------------------------------------------------- */
+/* ---------------------------- Lista Solicitudes ------------------------------ */
+
+route.get("/listasolicitudes/:id", (req, res, next) => {
+    NombreSolicitud.sequelize.query(`CALL sp_solicitudes(${req.params.id});`)
+    .then(solicitudes => {
+        if(solicitudes){
+            res.json(solicitudes)
+        } else {
+            res.status(404).send({message : "The value doesn't exist"})
+        }
+    })
+    .catch(err => {
+        res.send(err)
+    })
+});
+
+
+
 
 module.exports = route;
