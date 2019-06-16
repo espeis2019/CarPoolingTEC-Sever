@@ -3,6 +3,8 @@ const route = express.Router();
 
 const Administrador = require("../model/Administrador");
 const Pasajero = require("../model/Pasajero")
+const Chofer = require("../model/Chofer")
+const Auto = require("../model/Auto")
 
 /* -----------------------Administrator -------------------------- */
 
@@ -100,6 +102,39 @@ route.post('/registrar', (req, res, next) => {
         });
     }
 })
+
+/* ----------------------- Registrar Auto ---------------------- */
+
+
+//Modify
+route.post('/r_auto/:id', (req, res, next) => {
+    if(typeof(req.body.PLACA) != 'string' &&
+       typeof(req.body.MARCA) != 'string' &&
+       typeof(req.body.MODELO) != 'string' &&
+       typeof(req.body.CAPACIDAD) != 'integer'){
+           res.status(400)
+           res.json({error: 'Bad Data'})
+    }else{
+        Chofer.findOne({
+            attributes: ["IdChofer"],
+            where: {IdPasajerof: req.params.id}
+        }).then(chofer =>{
+            Auto.create({
+                PLACA: req.body.PLACA,
+                MARCA: req.body.MARCA,
+                MODELO: req.body.MODELO,
+                CAPACIDAD: req.body.CAPACIDAD,
+                IdChofer: chofer.IdChofer
+            })
+                .then((postCreated)=>{
+                res.status(201).json({message: postCreated})
+                }).catch((err)=>{
+                res.status(500).json({message: err})
+            });
+        })
+    }
+})
+
 
 
 module.exports = route;

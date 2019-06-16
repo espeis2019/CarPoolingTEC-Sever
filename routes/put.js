@@ -3,6 +3,7 @@ const route = express.Router();
 
 const Administrador = require("../model/Administrador");
 const Pasajero = require("../model/Pasajero")
+const Amigo = require("../model/Amigo")
 
 
 /* ---------------------- Administrator ------------------------- */
@@ -51,7 +52,40 @@ route.put('/editarp/:id', (req, res, next) => {
     }
 })
 
+/* ------------------- Aceptar o eliminar solicitud --------------------- */
 
+route.put('/aoes', (req, res, next) => {
+    if(typeof(req.body.IdAmigo) != 'integer' &&
+       typeof(req.body.opcion) != 'boolean'){
+           res.status(400)
+           res.json({error: 'Bad Data'})
+    } else {
+        if(req.body.opcion == true){
+            Amigo.update(
+                {
+                    AMIGO: true
+                },
+                {where: {IdAmigo: req.body.IdAmigo} }
+            )
+            .then(() => {
+                res.status(200).json({ message: 'Resource Updated'})
+            })
+            .error(err => handleError(err))
+        } else {
+            Amigo.destroy({
+                where: {
+                    IdAmigo: req.body.IdAmigo
+                }
+            })
+            .then(() => {
+                res.json({ status: 'Resource deleted'})
+            })
+            .catch(err => {
+                res.send(err)
+            })
+        }
+    }
+})
 
 
 module.exports = route;

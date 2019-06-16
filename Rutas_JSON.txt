@@ -19,7 +19,7 @@
 	"CONTRASENA": "joel"
 }
 
-//Editar Perfil
+//Editar Perfil/put
 
 /api/editarp/:id
 
@@ -30,7 +30,7 @@
 	"CONTRASENA": "joel"
 }
 
-//Lista solicitudes
+//Lista solicitudes/get
 
 /api/listasolicitudes/:id
 
@@ -41,6 +41,60 @@
         "Apellido": "Esquivel"
     }
 ]
+
+//Aceptar o eliminar solicitud/put
+
+/api/aoes
+
+{
+	"IdAmigo": 4,
+	"opcion": false
+}
+
+//Obtener puntos/get modificar categoria
+
+/api/puntos/:id
+
+{
+    "PUNTOS": 100
+}
+
+// Lista amigos/get
+
+/api/amigos/:id
+
+[
+    {
+        "IdAmigo": 1,
+        "Nombre": "Gerardo",
+        "Apellido": "Zeledon"
+    },
+    {
+        "IdAmigo": 2,
+        "Nombre": "Juan",
+        "Apellido": "Esquivel"
+    },
+    {
+        "IdAmigo": 3,
+        "Nombre": "Crisptofer",
+        "Apellido": "Fernandez"
+    }
+]
+
+//Lista Autos/get
+
+/api/autos/:id
+
+[
+    {
+        "IdAuto": 2,
+        "PLACA": "BFF-068",
+        "MARCA": "NISSAN",
+        "MODELO": "FRONTIER",
+        "CAPACIDAD": 5
+    }
+]
+
 
 
 
