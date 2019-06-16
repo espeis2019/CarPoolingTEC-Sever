@@ -9,7 +9,8 @@ const Chofer = connection.sequelize.define(
   {
     IdChofer:{
       type: Sequelize.INTEGER,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     IdPasajerof:{
       type: Sequelize.INTEGER,

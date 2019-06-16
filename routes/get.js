@@ -129,5 +129,18 @@ route.get("/list_pasajeros/:txt", (req, res, next) => {
     })
 });
 
+/* ---------------------------- Lista Categoria ---------------------------- */
+
+route.get("/l_categoria", (req, res, next) => {
+    Categoria.findAll()
+    .then(admins => {
+        res.json(admins)
+    })
+    .catch(err => {
+        res.send(err)
+    })
+});
+
+
 
 module.exports = route;

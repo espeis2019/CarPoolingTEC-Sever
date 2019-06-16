@@ -4,11 +4,12 @@ const route = express.Router();
 const Administrador = require("../model/Administrador");
 const Pasajero = require("../model/Pasajero")
 const Amigo = require("../model/Amigo")
+const Categoria = require("../model/Categoria")
 
 
 /* ---------------------- Administrator ------------------------- */
-
-route.put('/admin/:id', (req, res, next) => {
+/*
+route.put('/u_admin/:id', (req, res, next) => {
     if(!req.body.IdPasajero){
         res.status(400)
         res.json({
@@ -25,7 +26,7 @@ route.put('/admin/:id', (req, res, next) => {
         .error(err => handleError(err))
     }
 })
-
+*/
 /* -------------------------- Editar Perfil --------------------------- */
 
 route.put('/editarp/:id', (req, res, next) => {
@@ -87,5 +88,100 @@ route.put('/aoes', (req, res, next) => {
     }
 })
 
+/* ------------------- Administrar puntos ---------------------- */
+
+route.put('/admin_pts', (req, res, next) => {
+    if(typeof(req.body.IdPasajero) != 'number' &&
+       typeof(req.body.PUNTOS) != 'number' &&
+       typeof(req.body.operacion) != 'number'){
+        res.status(400)
+        res.json({error: 'Bad Data'})
+    }else{
+        Pasajero.findOne({
+            attributes: ["PUNTOS"],
+            where: {IdPasajero: req.body.IdPasajero}
+        }).then(pasajero => {
+            
+            if(req.body.operacion == 1){
+                Pasajero.update(
+                    {
+                        PUNTOS: pasajero.PUNTOS + req.body.PUNTOS
+                    },
+                    {where: {IdPasajero: req.body.IdPasajero} }
+                )
+                .then(() => {
+                    res.status(200).json({ message: 'Resource Updated'})
+                })
+                .error(err => handleError(err))
+            } else {
+                if(req.body.PUNTOS <= pasajero.PUNTOS){
+                    Pasajero.update(
+                        {
+                            PUNTOS: pasajero.PUNTOS - req.body.PUNTOS
+                        },
+                        {where: {IdPasajero: req.body.IdPasajero} }
+                    )
+                    .then(() => {
+                        res.status(200).json({ message: 'Resource Updated'})
+                    })
+                    .error(err => handleError(err))
+                } else {
+                    res.status(400).json({message: "Not enougth points"})
+                }
+            }
+        }).catch(err => {
+            res.status(500).send(err)
+        })
+    }
+})
+
+
+/* --------------------- Update Categoria -------------------- */
+
+route.put('/u_categoria', (req, res, next) => {
+    if(typeof(req.body.NOMBRE) != 'string' &&
+       typeof(req.body.PUNTOSPORVIAJE != 'number'&&
+       typeof(req.body.VMINIMOSCATEGORIA) != 'number' &&
+       typeof(req.body.VMAXIMOSCATEGORIA) != 'number')){
+        res.status(400)
+        res.json({error: 'Bad Data'})
+    }else{
+        Categoria.update(
+            {
+                NOMBRE: req.body.NOMBRE,
+                PUNTOSPORVIAJE: req.body.PUNTOSPORVIAJE,
+                VMINIMOSCATEGORIA: req.body.VMINIMOSCATEGORIA,
+                VMAXIMOSCATEGORIA: req.body.VMAXIMOSCATEGORIA
+            },
+            {where: {NOMBRE: req.body.NOMBRE} }
+        )
+        .then(() => {
+            res.status(200).json({ message: 'Resource Updated'})
+        })
+        .error(err => handleError(err))
+    }
+})
+
+
+/* ----------------------- Habilitar pasajero --------------------- */
+
+route.put('/admin_pasajero', (req, res, next) => {
+    if(typeof(req.body.IdPasajero) != 'number' &&
+       typeof(req.body.ACTIVO != 'number')){
+        res.status(400)
+        res.json({error: 'Bad Data'})
+    }else{
+        Pasajero.update(
+            {
+                ACTIVO: req.body.ACTIVO
+            },
+            {where: {IdPasajero: req.body.IdPasajero} }
+        )
+        .then(() => {
+            res.status(200).json({ message: 'Resource Updated'})
+        })
+        .error(err => handleError(err))
+    }
+})
 
 module.exports = route;

@@ -2,9 +2,22 @@
 //Ingresar, POST
 
 /api/ingresar/:t
+t = 0, cedula
+t = 1, carnet
 {
 	"coc":2016081117,
-	"pass": "Nano13"
+	"CONTRASENA": "Nano13"
+}
+
+respuesta
+
+{
+    "IdPasajero": 6,
+    "NOMBRE": "Angela",
+    "APELLIDO": "Fernandez",
+    "CORREO": "angelafd33@gmail.com",
+    "CEDULA": 62730486,
+    "CARNET": 1994048657
 }
 
 //Registrar, POST
@@ -129,6 +142,112 @@
         "CORREO": "juanesro@gmail.com"
     }
 ]
+
+//Administrar Puntos
+
+/api/admin_pts
+
+1: sumar
+0 o cualquier cosa: restar
+
+{
+	"IdPasajero":1,
+	"PUNTOS": 600,
+	"operacion": 1
+}
+
+//Crear admin
+
+/api/c_admin
+
+{
+   "IdPasajero": 1
+}
+
+//Crear Categoria
+Post
+
+/api/c_categoria
+
+{
+   "NOMBRE": "nom",
+   "PUNTOSPORVIAJE": 2,
+   "VMINIMOSCATEGORIA": 3,
+   "VMAXIMOSCATEGORIA": 4
+}
+
+
+//Update Categoria
+Put
+
+/api/u_categoria
+
+{
+   "NOMBRE": "nom",
+   "PUNTOSPORVIAJE": 2,
+   "VMINIMOSCATEGORIA": 3,
+   "VMAXIMOSCATEGORIA": 4
+}
+
+//Delete Categoria
+delete
+
+/api/d_categoria
+
+{
+   "NOMBRE": "nom"
+}
+
+
+//Lista categorias
+
+get
+
+/api/l_categorias
+
+[
+    {
+        "IdCategoria": 1,
+        "NOMBRE": "AMATEUR",
+        "PUNTOSPORVIAJE": 10,
+        "VMINIMOSCATEGORIA": 15,
+        "VMAXIMOSCATEGORIA": 0
+    },
+    {
+        "IdCategoria": 2,
+        "NOMBRE": "BRONCE",
+        "PUNTOSPORVIAJE": 20,
+        "VMINIMOSCATEGORIA": 30,
+        "VMAXIMOSCATEGORIA": 16
+    },
+    {
+        "IdCategoria": 3,
+        "NOMBRE": "PLATA",
+        "PUNTOSPORVIAJE": 30,
+        "VMINIMOSCATEGORIA": 45,
+        "VMAXIMOSCATEGORIA": 31
+    },
+    {
+        "IdCategoria": 4,
+        "NOMBRE": "ORO",
+        "PUNTOSPORVIAJE": 40,
+        "VMINIMOSCATEGORIA": 60,
+        "VMAXIMOSCATEGORIA": 46
+    }
+]
+
+
+//Administrar usuarios
+
+Put
+/api/admin_pasajero/:id
+
+{
+	"IdPasajero": 1,
+	"ACTIVO": true
+}
+
+
 
 
 

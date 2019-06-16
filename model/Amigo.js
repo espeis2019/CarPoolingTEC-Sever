@@ -20,7 +20,7 @@ const Amigo = connection.sequelize.define(
     },
     IdAmigo:{
       type: Sequelize.INTEGER,
-      autoIncrement: true 
+      autoIncrement: true,
     }
   },
     {

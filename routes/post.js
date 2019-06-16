@@ -6,6 +6,8 @@ const Pasajero = require("../model/Pasajero")
 const Chofer = require("../model/Chofer")
 const Auto = require("../model/Auto")
 const Amigo = require("../model/Amigo")
+const Categoria = require("../model/Categoria")
+const Validacion = require("../model/Validacion")
 
 /* -----------------------Administrator -------------------------- */
 
@@ -17,7 +19,7 @@ route.post('/admin', (req, res, next) => {
     }else{
         Administrador.create(req.body)
             .then((postCreated)=>{
-            res.status(201).json({message: postCreated})
+            res.status(201).json({message: "created"})
             }).catch((err)=>{
             res.status(500).json({message: err})
         });
@@ -36,32 +38,46 @@ route.post('/ingresar/:t', (req, res, next) => {
             Pasajero.findOne({
                 where: {
                     CEDULA: req.body.coc,
-                    CONTRASENA: req.body.pass,
+                    CONTRASENA: req.body.CONTRASENA,
                     ACTIVO: true
                 }
             })
             .then(user => {
                 if(user){
-                    res.status(200).send({message: "Valid"})
+                    res.status(200).json({
+                        IdPasajero: user.IdPasajero,
+                        NOMBRE: user.NOMBRE,
+                        APELLIDO: user.APELLIDO,
+                        CORREO: user.CORREO,
+                        CEDULA: user.CEDULA,
+                        CARNET: user.CARNET
+                    })
                 } else {
                     res.status(404).send({message: "Invalid"})
                 }
             })
             .catch(err => {
-                res.send(err)
+                res.status(500).send(err)
             })
         }else{
             //carnet
             Pasajero.findOne({
                 where: {
                     CARNET: req.body.coc,
-                    CONTRASENA: req.body.pass,
+                    CONTRASENA: req.body.CONTRASENA,
                     ACTIVO: true
                 }
             })
             .then(user => {
                 if(user){
-                    res.status(200).send({message: "Valid"})
+                    res.status(200).json({
+                        IdPasajero: user.IdPasajero,
+                        NOMBRE: user.NOMBRE,
+                        APELLIDO: user.APELLIDO,
+                        CORREO: user.CORREO,
+                        CEDULA: user.CEDULA,
+                        CARNET: user.CARNET
+                    })
                 } else {
                     res.status(404).send({message: "Invalid"})
                 }
@@ -85,22 +101,36 @@ route.post('/registrar', (req, res, next) => {
            res.status(400)
            res.json({error: 'Bad Data'})
     }else{
-        Pasajero.create({
-            CEDULA: req.body.CEDULA,
-            CARNET: req.body.CARNET,
-            NOMBRE: req.body.NOMBRE,
-            APELLIDO: req.body.APELLIDO,
-            CORREO: req.body.CORREO,
-            IdCategoria: 1,
-            PUNTOS: 0,
-            CONTRASENA: req.body.CONTRASENA,
-            ACTIVO: 1
+        Validacion.findOne({
+            where: {
+                CARNET: req.body.CARNET
+            } 
+        }).then(carnet => {
+            if(carnet != null){
+                Pasajero.create({
+                    CEDULA: req.body.CEDULA,
+                    CARNET: req.body.CARNET,
+                    NOMBRE: req.body.NOMBRE,
+                    APELLIDO: req.body.APELLIDO,
+                    CORREO: req.body.CORREO,
+                    IdCategoria: 1,
+                    PUNTOS: 0,
+                    CONTRASENA: req.body.CONTRASENA,
+                    ACTIVO: 1
+                })
+                .then((postCreated)=>{
+                res.status(201).json({message: "Created"})
+                }).catch((err)=>{
+                    if(err){
+                        res.status(400).json({message: "Carnet already exist"})
+                    }else{
+                        res.status(500).json({message: err})
+                    }
+            });
+            } else {
+                res.status(404).json({message: "Unauthorized Carnet"})
+            }
         })
-            .then((postCreated)=>{
-            res.status(201).json({message: postCreated})
-            }).catch((err)=>{
-            res.status(500).json({message: err})
-        });
     }
 })
 
@@ -127,7 +157,7 @@ route.post('/r_auto/:id', (req, res, next) => {
                 IdChofer: chofer.IdChofer
             })
                 .then((postCreated)=>{
-                res.status(201).json({message: postCreated})
+                res.status(201).json({message: "created"})
                 }).catch((err)=>{
                 res.status(500).json({message: err})
             });
@@ -150,7 +180,26 @@ route.post('/c_solicitud', (req, res, next) => {
                 AMIGO: false,
             })
             .then((postCreated)=>{
-            res.status(201).json({message: postCreated})
+            res.status(201).json({message: "created"})
+            }).catch((err)=>{
+            res.status(500).json({message: err})
+        });
+    }
+})
+
+/* --------------------- Crear Categoria -------------------- */
+
+route.post('/c_categoria', (req, res, next) => {
+    if(typeof(req.body.NOMBRE) != 'string' &&
+       typeof(req.body.PUNTOSPORVIAJE != 'number'&&
+       typeof(req.body.VMINIMOSCATEGORIA) != 'number' &&
+       typeof(req.body.VMAXIMOSCATEGORIA) != 'number')){
+        res.status(400)
+        res.json({error: 'Bad Data'})
+    }else{
+        Categoria.create(req.body)
+            .then((postCreated)=>{
+            res.status(201).json({message: "created"})
             }).catch((err)=>{
             res.status(500).json({message: err})
         });
