@@ -116,7 +116,7 @@ route.get("/autos/:id", (req, res, next) => {
 /* --------------- Lista pasajeros para solicitudes ------------------ */
 
 route.get("/list_pasajeros/:txt", (req, res, next) => {
-    PasajeroReduc.sequelize.query(`CALL sp_buscar("${req.params.txt}");`)
+    PasajeroReduc.sequelize.query(`CALL sp_buscar(${req.params.txt});`)
     .then(pasajeros => {
         if(pasajeros){
             res.json(pasajeros)
