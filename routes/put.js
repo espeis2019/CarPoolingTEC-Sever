@@ -55,7 +55,7 @@ route.put('/editarp/:id', (req, res, next) => {
 /* ------------------- Aceptar o eliminar solicitud --------------------- */
 
 route.put('/aoes', (req, res, next) => {
-    if(typeof(req.body.IdAmigo) != 'integer' &&
+    if(typeof(req.body.IdAmigo) != 'number' &&
        typeof(req.body.opcion) != 'boolean'){
            res.status(400)
            res.json({error: 'Bad Data'})

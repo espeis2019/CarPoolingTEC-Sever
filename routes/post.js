@@ -5,6 +5,7 @@ const Administrador = require("../model/Administrador");
 const Pasajero = require("../model/Pasajero")
 const Chofer = require("../model/Chofer")
 const Auto = require("../model/Auto")
+const Amigo = require("../model/Amigo")
 
 /* -----------------------Administrator -------------------------- */
 
@@ -26,7 +27,7 @@ route.post('/admin', (req, res, next) => {
 /* ---------------------------- Ingresar ------------------------------- */
 
 route.post('/ingresar/:t', (req, res, next) => {
-    if(typeof(req.body.coc) != 'integer' && typeof(req.body.pass) != 'string'){
+    if(typeof(req.body.coc) != 'number' && typeof(req.body.pass) != 'string'){
         res.status(400)
         res.json({error: 'Bad Data'})
     } else {
@@ -75,8 +76,8 @@ route.post('/ingresar/:t', (req, res, next) => {
 /* ------------------------- Registrar ------------------------ */
 
 route.post('/registrar', (req, res, next) => {
-    if(typeof(req.body.CEDULA) != 'integer' &&
-       typeof(req.body.CARNET) != 'integer' &&
+    if(typeof(req.body.CEDULA) != 'number' &&
+       typeof(req.body.CARNET) != 'number' &&
        typeof(req.body.NOMBRE) != 'string' &&
        typeof(req.body.APELLIDO) != 'string' &&
        typeof(req.body.CORREO) != 'string' &&
@@ -106,12 +107,11 @@ route.post('/registrar', (req, res, next) => {
 /* ----------------------- Registrar Auto ---------------------- */
 
 
-//Modify
 route.post('/r_auto/:id', (req, res, next) => {
     if(typeof(req.body.PLACA) != 'string' &&
        typeof(req.body.MARCA) != 'string' &&
        typeof(req.body.MODELO) != 'string' &&
-       typeof(req.body.CAPACIDAD) != 'integer'){
+       typeof(req.body.CAPACIDAD) != 'number'){
            res.status(400)
            res.json({error: 'Bad Data'})
     }else{
@@ -132,6 +132,28 @@ route.post('/r_auto/:id', (req, res, next) => {
                 res.status(500).json({message: err})
             });
         })
+    }
+})
+
+/* --------------------- Crear solicitud ------------------- */
+
+route.post('/c_solicitud', (req, res, next) => {
+    if(typeof(req.body.IdReceptor) != 'number' &&
+       typeof(req.body.IdEmisor) != 'number'){
+        res.status(400)
+        res.json({error: 'Bad Data'})
+    }else{
+        Amigo.create(
+            {
+                IdReceptor: req.body.IdReceptor,
+                IdEmisor: req.body.IdEmisor,
+                AMIGO: false,
+            })
+            .then((postCreated)=>{
+            res.status(201).json({message: postCreated})
+            }).catch((err)=>{
+            res.status(500).json({message: err})
+        });
     }
 })
 

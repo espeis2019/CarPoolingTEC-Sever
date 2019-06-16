@@ -51,12 +51,13 @@
 	"opcion": false
 }
 
-//Obtener puntos/get modificar categoria
+//Obtener puntos y categoria/get  
 
 /api/puntos/:id
 
 {
-    "PUNTOS": 100
+    "PUNTOS": 100,
+    "CATEGORIA: nombre
 }
 
 // Lista amigos/get
@@ -95,6 +96,39 @@
     }
 ]
 
+//registrar autos / post
+
+/api/r_auto
+
+{
+	"PLACA":"CFF-277",
+	"MARCA":"TESLA",
+	"MODELO":"ROASTER",
+	"CAPACIDAD":2
+}
+
+
+// Añadir solicitud
+
+/api/c_solicitud
+
+{
+	"IdReceptor": 1,
+	"IdEmisor": 2
+}
+
+//Lista pasajeros para enviar solicitud
+
+/list_pasajeros/:txt
+
+[
+    {
+        "IdPasajero": 3,
+        "NOMBRE": "Juan",
+        "APELLIDO": "Esquivel",
+        "CORREO": "juanesro@gmail.com"
+    }
+]
 
 
 

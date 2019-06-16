@@ -7,6 +7,7 @@ const NombreSolicitud = require("../model/NomSolicitud");
 const Pasajero = require("../model/Pasajero")
 const Auto = require("../model/Auto")
 const Categoria = require("../model/Categoria")
+const PasajeroReduc = require("../model/PasajeroReduc")
 
 
 
@@ -103,6 +104,22 @@ route.get("/autos/:id", (req, res, next) => {
     .then(autos => {
         if(autos){
             res.json(autos)
+        } else {
+            res.status(404).send({message : "The value doesn't exist"})
+        }
+    })
+    .catch(err => {
+        res.send(err)
+    })
+});
+
+/* --------------- Lista pasajeros para solicitudes ------------------ */
+
+route.get("/list_pasajeros/:txt", (req, res, next) => {
+    PasajeroReduc.sequelize.query(`CALL sp_buscar("${req.params.txt}");`)
+    .then(pasajeros => {
+        if(pasajeros){
+            res.json(pasajeros)
         } else {
             res.status(404).send({message : "The value doesn't exist"})
         }
