@@ -1,12 +1,12 @@
 const Sequelize = require("sequelize");
 const db = {}
 
-/*
+
 const sequelize = new Sequelize('csx48i21toab0xq1', 'y1xcisaj0woc3gro', 'b30ur04542y26hws',{
    host: 'u0zbt18wwjva9e0v.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-*/
+/*
 const sequelize = new Sequelize('CarpoolingTEC', 'admin', 'cristofer12ff',{
-   host: 'localhost',
+   host: 'localhost',*/
 
    dialect: 'mysql',
    operatorsAliases: false,
