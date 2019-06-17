@@ -72,7 +72,7 @@ server.listen(port, () => {
     console.log(`Server is running in ${URL}${port}`)
 })
 
-
+module.exports = server;
 
 /*
 const path = require('path');

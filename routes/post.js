@@ -8,6 +8,7 @@ const Auto = require("../model/Auto")
 const Amigo = require("../model/Amigo")
 const Categoria = require("../model/Categoria")
 const Validacion = require("../model/Validacion")
+const Parqueo = require("../model/Parqueo")
 
 /* -----------------------Administrator -------------------------- */
 
@@ -214,13 +215,21 @@ route.post('/c_viaje', (req, res, next) => {
             attributes: ["IdPasajero"],
             where: {IdChofer: req.body.CHOFER}
         })
-        //var IdParqueo = 
+        
         var participantes = req.body.PARTICIPANTES
         var arr = JSON.parse(participantes);
-        for(var i = 0; i < arr.length; i++)
-        {
 
+        for(i = 0; i < jsonData.length; i++){
+            Categoria.create(
+                {
+                    
+                })
         }
+
+        var ListIdParqueo = Parqueo.findAll({
+            where:{ACTIVO: true}
+        })
+        
     }
 })
 

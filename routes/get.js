@@ -101,9 +101,9 @@ route.get("/amigos/:id", (req, res, next) => {
 
 route.get("/autos/:id", (req, res, next) => {
     Auto.sequelize.query(`CALL sp_listaAutos(${req.params.id});`)
-    .then(autos => {
-        if(autos){
-            res.json(autos)
+    .then(auto => {
+        if(auto){
+            res.json({ autos : auto})
         } else {
             res.json({ status: 404})
         }
@@ -121,7 +121,7 @@ route.get("/list_pasajeros/:txt", (req, res, next) => {
         if(pasajeros){
             res.json(pasajeros)
         } else {
-            rres.json({ status: 404})
+            res.json({ status: 404})
         }
     })
     .catch(err => {
