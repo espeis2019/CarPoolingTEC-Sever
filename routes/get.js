@@ -20,7 +20,7 @@ route.get("/admin/all", (req, res, next) => {
         res.json(admins)
     })
     .catch(err => {
-        res.send(err)
+        res.json({ status: 500})
     })
 });
 
@@ -35,11 +35,11 @@ route.get("/admin/:id", (req, res, next) => {
         if(admins){
             res.json(admins)
         } else {
-            res.status(404).send({message : "The value doesn't exist"})
+            res.json({ status: 404})
         }
     })
     .catch(err => {
-        res.send(err)
+        res.json({ status: 500})
     })
 });
 
@@ -52,11 +52,11 @@ route.get("/listasolicitudes/:id", (req, res, next) => {
         if(solicitudes){
             res.json(solicitudes)
         } else {
-            res.status(404).send({message : "The value doesn't exist"})
+            res.json({ status: 404})
         }
     })
     .catch(err => {
-        res.send(err)
+        res.json({ status: 500})
     })
 });
 
@@ -72,10 +72,10 @@ route.get("/puntos/:id", (req, res, next) => {
             attributes:["NOMBRE"],
             where: {IdCategoria: pasajero.IdCategoria}
         }).then(Cat => {
-            res.status(200).json({PUNTOS: pasajero.PUNTOS, CATEGORIA: Cat.NOMBRE})
+            res.json({PUNTOS: pasajero.PUNTOS, CATEGORIA: Cat.NOMBRE})
         })
         .catch(err => {
-            res.send(err)
+            res.json({ status: 500})
         })
     })
 })
@@ -88,11 +88,11 @@ route.get("/amigos/:id", (req, res, next) => {
         if(amigos){
             res.json(amigos)
         } else {
-            res.status(404).send({message : "The value doesn't exist"})
+            res.json({ status: 404})
         }
     })
     .catch(err => {
-        res.send(err)
+        res.json({ status: 500})
     })
 });
 
@@ -105,11 +105,11 @@ route.get("/autos/:id", (req, res, next) => {
         if(autos){
             res.json(autos)
         } else {
-            res.status(404).send({message : "The value doesn't exist"})
+            res.json({ status: 404})
         }
     })
     .catch(err => {
-        res.send(err)
+        res.json({ status: 500})
     })
 });
 
@@ -121,11 +121,11 @@ route.get("/list_pasajeros/:txt", (req, res, next) => {
         if(pasajeros){
             res.json(pasajeros)
         } else {
-            res.status(404).send({message : "The value doesn't exist"})
+            rres.json({ status: 404})
         }
     })
     .catch(err => {
-        res.send(err)
+        res.json({ status: 500})
     })
 });
 
@@ -137,7 +137,7 @@ route.get("/l_categoria", (req, res, next) => {
         res.json(admins)
     })
     .catch(err => {
-        res.send(err)
+        res.json({ status: 500})
     })
 });
 

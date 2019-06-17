@@ -13,10 +13,10 @@ route.delete('/admin/:id', (req, res, next) => {
         }
     })
     .then(() => {
-        res.json({ status: 'Resource deleted'})
+        res.json({ status: 200})
     })
     .catch(err => {
-        res.send(err)
+        res.json({ status: 500})
     })
 })
 
@@ -29,10 +29,10 @@ route.delete('/d_categoria', (req, res, next) => {
         }
     })
     .then(() => {
-        res.json({ status: 'Resource deleted'})
+        res.json({ status: 200})
     })
     .catch(err => {
-        res.send(err)
+        res.json({ status: 500})
     })
 })
 

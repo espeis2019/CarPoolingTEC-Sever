@@ -14,14 +14,13 @@ const Validacion = require("../model/Validacion")
 //Create Administrator
 route.post('/admin', (req, res, next) => {
     if(!req.body.IdPasajero){
-        res.status(400)
-        res.json({error: 'Bad Data'})
+        res.json({status: 400})
     }else{
         Administrador.create(req.body)
             .then((postCreated)=>{
-            res.status(201).json({message: "created"})
+            res.json({message: 201})
             }).catch((err)=>{
-            res.status(500).json({message: err})
+            res.json({status: 500})
         });
     }
 })
@@ -30,8 +29,7 @@ route.post('/admin', (req, res, next) => {
 
 route.post('/ingresar/:t', (req, res, next) => {
     if(typeof(req.body.coc) != 'number' && typeof(req.body.pass) != 'string'){
-        res.status(400)
-        res.json({error: 'Bad Data'})
+        res.json({status: 400})
     } else {
         //Cedula
         if(req.params.t == "0"){
@@ -44,7 +42,7 @@ route.post('/ingresar/:t', (req, res, next) => {
             })
             .then(user => {
                 if(user){
-                    res.status(200).json({
+                    res.json({
                         IdPasajero: user.IdPasajero,
                         NOMBRE: user.NOMBRE,
                         APELLIDO: user.APELLIDO,
@@ -53,11 +51,11 @@ route.post('/ingresar/:t', (req, res, next) => {
                         CARNET: user.CARNET
                     })
                 } else {
-                    res.status(404).send({message: "Invalid"})
+                    res.json({status: 404})
                 }
             })
             .catch(err => {
-                res.status(500).send(err)
+                res.json({status:500})
             })
         }else{
             //carnet
@@ -70,7 +68,7 @@ route.post('/ingresar/:t', (req, res, next) => {
             })
             .then(user => {
                 if(user){
-                    res.status(200).json({
+                    res.json({
                         IdPasajero: user.IdPasajero,
                         NOMBRE: user.NOMBRE,
                         APELLIDO: user.APELLIDO,
@@ -79,11 +77,11 @@ route.post('/ingresar/:t', (req, res, next) => {
                         CARNET: user.CARNET
                     })
                 } else {
-                    res.status(404).send({message: "Invalid"})
+                    res.json({status: 404})
                 }
             })
             .catch(err => {
-                res.send(err)
+                res.json({status:500})
             })
         }
     }
@@ -98,8 +96,7 @@ route.post('/registrar', (req, res, next) => {
        typeof(req.body.APELLIDO) != 'string' &&
        typeof(req.body.CORREO) != 'string' &&
        typeof(req.body.CONTRASENA) != 'string'){
-           res.status(400)
-           res.json({error: 'Bad Data'})
+           res.json({status: 400})
     }else{
         Validacion.findOne({
             where: {
@@ -122,13 +119,13 @@ route.post('/registrar', (req, res, next) => {
                 res.json(postCreated)
                 }).catch((err)=>{
                     if(err.message == "Validation error"){
-                        res.json({message: 400})
+                        res.json({status: 400})
                     }else{
-                        res.json({message: 500})
+                        res.json({status: 500})
                     }
             });
             } else {
-                res.json({message: 404})
+                res.json({status: 404})
             }
         })
     }
@@ -142,8 +139,7 @@ route.post('/r_auto/:id', (req, res, next) => {
        typeof(req.body.MARCA) != 'string' &&
        typeof(req.body.MODELO) != 'string' &&
        typeof(req.body.CAPACIDAD) != 'number'){
-           res.status(400)
-           res.json({error: 'Bad Data'})
+           res.json({status: 400})
     }else{
         Chofer.findOne({
             attributes: ["IdChofer"],
@@ -157,9 +153,9 @@ route.post('/r_auto/:id', (req, res, next) => {
                 IdChofer: chofer.IdChofer
             })
                 .then((postCreated)=>{
-                res.status(201).json({message: "created"})
+                res.json({status: 201})
                 }).catch((err)=>{
-                res.status(500).json({message: err})
+                res.json({message: 500})
             });
         })
     }
@@ -170,8 +166,7 @@ route.post('/r_auto/:id', (req, res, next) => {
 route.post('/c_solicitud', (req, res, next) => {
     if(typeof(req.body.IdReceptor) != 'number' &&
        typeof(req.body.IdEmisor) != 'number'){
-        res.status(400)
-        res.json({error: 'Bad Data'})
+        res.json({status: 400})
     }else{
         Amigo.create(
             {
@@ -180,9 +175,9 @@ route.post('/c_solicitud', (req, res, next) => {
                 AMIGO: false,
             })
             .then((postCreated)=>{
-            res.status(201).json({message: "created"})
+            res.json({status: 201})
             }).catch((err)=>{
-            res.status(500).json({message: err})
+            res.json({status: 500})
         });
     }
 })
@@ -213,8 +208,7 @@ route.post('/c_categoria', (req, res, next) => {
 route.post('/c_viaje', (req, res, next) => {
     if(typeof(req.body.AUTO) != 'number' &&
        typeof(req.body.CHOFER != 'number')){
-        res.status(400)
-        res.json({error: 'Bad Data'})
+        res.json({status: 400})
     }else{
         var IdAuto = req.body.AUTO
         var IdPasajero =  Chofer.findOne({

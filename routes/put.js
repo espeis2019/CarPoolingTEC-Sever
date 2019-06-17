@@ -34,8 +34,7 @@ route.put('/editarp/:id', (req, res, next) => {
        typeof(req.body.APELLIDO) != 'string' &&
        typeof(req.body.CORREO) != 'string' &&
        typeof(req.body.CONTRASENA) != 'string'){
-           res.status(400)
-           res.json({error: 'Bad Data'})
+        res.json({ status: 400})
     } else {
         Pasajero.update(
             {
@@ -47,7 +46,7 @@ route.put('/editarp/:id', (req, res, next) => {
             {where: {IdPasajero: req.params.id} }
         )
         .then(() => {
-            res.status(200).json({ message: 'Resource Updated'})
+            res.json({ status: 200})
         })
         .error(err => handleError(err))
     }
@@ -58,8 +57,7 @@ route.put('/editarp/:id', (req, res, next) => {
 route.put('/aoes', (req, res, next) => {
     if(typeof(req.body.IdAmigo) != 'number' &&
        typeof(req.body.opcion) != 'boolean'){
-           res.status(400)
-           res.json({error: 'Bad Data'})
+        res.json({ status: 400})
     } else {
         if(req.body.opcion == true){
             Amigo.update(
@@ -69,7 +67,7 @@ route.put('/aoes', (req, res, next) => {
                 {where: {IdAmigo: req.body.IdAmigo} }
             )
             .then(() => {
-                res.status(200).json({ message: 'Resource Updated'})
+                res.json({ status: 200})
             })
             .error(err => handleError(err))
         } else {
@@ -79,10 +77,10 @@ route.put('/aoes', (req, res, next) => {
                 }
             })
             .then(() => {
-                res.json({ status: 'Resource deleted'})
+                res.json({ status: 200})
             })
             .catch(err => {
-                res.send(err)
+                res.json({ status: 500})
             })
         }
     }
@@ -94,8 +92,7 @@ route.put('/admin_pts', (req, res, next) => {
     if(typeof(req.body.IdPasajero) != 'number' &&
        typeof(req.body.PUNTOS) != 'number' &&
        typeof(req.body.operacion) != 'number'){
-        res.status(400)
-        res.json({error: 'Bad Data'})
+        res.json({ status: 400})
     }else{
         Pasajero.findOne({
             attributes: ["PUNTOS"],
@@ -110,7 +107,7 @@ route.put('/admin_pts', (req, res, next) => {
                     {where: {IdPasajero: req.body.IdPasajero} }
                 )
                 .then(() => {
-                    res.status(200).json({ message: 'Resource Updated'})
+                    res.json({ status: 200})
                 })
                 .error(err => handleError(err))
             } else {
@@ -122,15 +119,15 @@ route.put('/admin_pts', (req, res, next) => {
                         {where: {IdPasajero: req.body.IdPasajero} }
                     )
                     .then(() => {
-                        res.status(200).json({ message: 'Resource Updated'})
+                        res.json({ status: 200})
                     })
                     .error(err => handleError(err))
                 } else {
-                    res.status(400).json({message: "Not enougth points"})
+                    res.json({ status: 400})
                 }
             }
         }).catch(err => {
-            res.status(500).send(err)
+            res.json({ status: 500})
         })
     }
 })
@@ -143,8 +140,7 @@ route.put('/u_categoria', (req, res, next) => {
        typeof(req.body.PUNTOSPORVIAJE != 'number'&&
        typeof(req.body.VMINIMOSCATEGORIA) != 'number' &&
        typeof(req.body.VMAXIMOSCATEGORIA) != 'number')){
-        res.status(400)
-        res.json({error: 'Bad Data'})
+        res.json({ status: 400})
     }else{
         Categoria.update(
             {
@@ -156,7 +152,7 @@ route.put('/u_categoria', (req, res, next) => {
             {where: {NOMBRE: req.body.NOMBRE} }
         )
         .then(() => {
-            res.status(200).json({ message: 'Resource Updated'})
+            res.json({ status: 200})
         })
         .error(err => handleError(err))
     }
@@ -168,8 +164,7 @@ route.put('/u_categoria', (req, res, next) => {
 route.put('/admin_pasajero', (req, res, next) => {
     if(typeof(req.body.IdPasajero) != 'number' &&
        typeof(req.body.ACTIVO != 'number')){
-        res.status(400)
-        res.json({error: 'Bad Data'})
+        res.json({status: 400})
     }else{
         Pasajero.update(
             {
@@ -178,7 +173,7 @@ route.put('/admin_pasajero', (req, res, next) => {
             {where: {IdPasajero: req.body.IdPasajero} }
         )
         .then(() => {
-            res.status(200).json({ message: 'Resource Updated'})
+            res.json({ status: 200})
         })
         .error(err => handleError(err))
     }
