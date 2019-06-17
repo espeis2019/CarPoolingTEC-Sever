@@ -48,9 +48,9 @@ route.get("/admin/:id", (req, res, next) => {
 
 route.get("/listasolicitudes/:id", (req, res, next) => {
     NombreSolicitud.sequelize.query(`CALL sp_solicitudes(${req.params.id});`)
-    .then(solicitudes => {
-        if(solicitudes){
-            res.json(solicitudes)
+    .then(solicitud => {
+        if(solicitud){
+            res.json({solicitudes:solicitud})
         } else {
             res.json({ status: 404})
         }
@@ -84,9 +84,9 @@ route.get("/puntos/:id", (req, res, next) => {
 
 route.get("/amigos/:id", (req, res, next) => {
     NombreSolicitud.sequelize.query(`CALL sp_amigos(${req.params.id});`)
-    .then(amigos => {
-        if(amigos){
-            res.json(amigos)
+    .then(amigo => {
+        if(amigo){
+            res.json({amigos:amigo})
         } else {
             res.json({ status: 404})
         }
@@ -117,9 +117,9 @@ route.get("/autos/:id", (req, res, next) => {
 
 route.get("/list_pasajeros/:txt", (req, res, next) => {
     PasajeroReduc.sequelize.query(`CALL sp_buscar(${req.params.txt});`)
-    .then(pasajeros => {
-        if(pasajeros){
-            res.json(pasajeros)
+    .then(pasajero => {
+        if(pasajero){
+            res.json({pasajeros:pasajero})
         } else {
             res.json({ status: 404})
         }
