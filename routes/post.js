@@ -189,14 +189,13 @@ route.post('/c_categoria', (req, res, next) => {
        typeof(req.body.PUNTOSPORVIAJE != 'number'&&
        typeof(req.body.VMINIMOSCATEGORIA) != 'number' &&
        typeof(req.body.VMAXIMOSCATEGORIA) != 'number')){
-        res.status(400)
-        res.json({error: 'Bad Data'})
+        res.json({status: 400})
     }else{
         Categoria.create(req.body)
             .then((postCreated)=>{
-            res.status(201).json({message: "created"})
+            res.json({status: 201})
             }).catch((err)=>{
-            res.status(500).json({message: err})
+            res.json({status: 500})
         });
     }
 })
