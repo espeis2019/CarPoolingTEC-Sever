@@ -119,16 +119,16 @@ route.post('/registrar', (req, res, next) => {
                     ACTIVO: 1
                 })
                 .then((postCreated)=>{
-                res.status(201).json(postCreated)
+                res.json(postCreated)
                 }).catch((err)=>{
                     if(err.message == "Validation error"){
-                        res.status(400).json({message: "Carnet or Cedula already exist"})
+                        res.json({message: 400})
                     }else{
-                        res.status(500).json({message: err.message})
+                        res.json({message: 500})
                     }
             });
             } else {
-                res.status(404).json({message: "Unauthorized Carnet"})
+                res.json({message: 404})
             }
         })
     }

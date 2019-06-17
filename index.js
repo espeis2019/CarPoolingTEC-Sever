@@ -44,6 +44,7 @@ server.use("/api/", put);
 server.use("/api/", del);
 server.use("/",main);
 
+
 server.use((req,res,next)=>{
     const error = new Error("Unable to manage the request");
     //send a status code error
