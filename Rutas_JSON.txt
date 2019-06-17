@@ -1,6 +1,15 @@
 
 //Ingresar, POST
 
+//Admin
+post
+
+/admin
+
+{
+  "IdPasajero":2
+}
+
 /api/ingresar/:t
 t = 0, cedula
 t = 1, carnet
@@ -248,6 +257,16 @@ Put
 }
 
 
+//Crear viaje 
+
+/api/c_viaje
+post
+
+{
+	"AUTO": 1,
+	"CHOFER": 1,
+	"PARTICIPANTES": [1,2,3]
+}
 
 
 

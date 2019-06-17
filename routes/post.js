@@ -253,12 +253,14 @@ route.post('/c_viaje', (req, res, next) => {
                             CODIGOVIAJE: r
                         })
                     }
+                    /*
                     ParticipanteViaje.bulkCreate(array)
                         .then((postCreated)=>{
                         res.json({status: 201})
                         }).catch((err)=>{
                         res.json({status: 500})
                     });
+                    */
                 })
             })            
         })
