@@ -122,13 +122,13 @@ route.post('/registrar', (req, res, next) => {
                 res.status(201).json(postCreated)
                 }).catch((err)=>{
                     if(err.message == "Validation error"){
-                        res.status(400).json({message: "Carnet or Cedula already exist"})
+                        res.status(200).json({message: "Carnet or Cedula already exist"})
                     }else{
                         res.status(500).json({message: err.message})
                     }
             });
             } else {
-                res.status(404).json({message: "Unauthorized Carnet"})
+                res.status(200).json({message: "Unauthorized Carnet"})
             }
         })
     }
@@ -208,6 +208,8 @@ route.post('/c_categoria', (req, res, next) => {
 
 /* ---------------------- Crear Viaje --------------------------- */
 
+
+//PENDING PARQUEO
 route.post('/c_viaje', (req, res, next) => {
     if(typeof(req.body.AUTO) != 'number' &&
        typeof(req.body.CHOFER != 'number')){
@@ -219,8 +221,13 @@ route.post('/c_viaje', (req, res, next) => {
             attributes: ["IdPasajero"],
             where: {IdChofer: req.body.CHOFER}
         })
-        
-        
+        //var IdParqueo = 
+        var participantes = req.body.PARTICIPANTES
+        var arr = JSON.parse(participantes);
+        for(var i = 0; i < arr.length; i++)
+        {
+
+        }
     }
 })
 
