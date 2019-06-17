@@ -23,8 +23,9 @@ after(done => {
 describe('#Asynchronous administrador crud test', () => {
     it('get "administrador" record', (done) => {
         chai.request(server)
-            .get("/api/admin/all")
+            .get("/admin/all")
             .end(function(err,res) {
+                console.log(res.body)
                 if(err) done(err);
 
                 done();

@@ -9,6 +9,8 @@ const Amigo = require("../model/Amigo")
 const Categoria = require("../model/Categoria")
 const Validacion = require("../model/Validacion")
 const Parqueo = require("../model/Parqueo")
+const Viaje = require("../model/Viaje")
+const ParticipanteViaje = ("../model/ParticipanteViaje")
 
 /* -----------------------Administrator -------------------------- */
 
@@ -154,7 +156,7 @@ route.post('/r_auto/:id', (req, res, next) => {
                 IdChofer: chofer.IdChofer
             })
                 .then((postCreated)=>{
-                res.json({status: 201})
+                res.json(postCreated)
                 }).catch((err)=>{
                 res.json({message: 500})
             });
@@ -211,25 +213,56 @@ route.post('/c_viaje', (req, res, next) => {
         res.json({status: 400})
     }else{
         var IdAuto = req.body.AUTO
-        var IdPasajero =  Chofer.findOne({
-            attributes: ["IdPasajero"],
-            where: {IdChofer: req.body.CHOFER}
-        })
-        
+        Chofer.findOne({
+            attributes: ["IdChofer"],
+            where: {IdPasajerof: req.body.CHOFER}
+        }).then(chofer => {
+
+        console.log(chofer)
+        var IdChofer = chofer.IdChofer
         var participantes = req.body.PARTICIPANTES
-        var arr = JSON.parse(participantes);
 
-        for(i = 0; i < jsonData.length; i++){
-            Categoria.create(
-                {
-                    
-                })
-        }
-
-        var ListIdParqueo = Parqueo.findAll({
+        Parqueo.findAll({
             where:{ACTIVO: true}
+        }).then(Parqueos => {
+
+            var IdParqueox = Parqueos[0].IdParqueo
+            var d = new Date().getMonth();
+            Viaje.create(
+                {
+                    IdChoferFV: IdChofer,
+                    IdAutoFV: IdAuto,
+                    IdParqueoFV: IdParqueox,
+                    ACTIVO: false,
+                    MES: d
+                }
+            ).then(viaje => {
+
+                Parqueo.update(
+                    {
+                        ACTIVO: false
+                    },
+                    {where: {IdParqueo: IdParqueox} }
+                ).then(x => {
+                    var array = []
+                    for(i=0; i<participantes.length; i++){
+                        var r = Math.random().toString(36).substring(7);
+                        array.push({
+                            IdPasajeroFP: participantes[i],
+                            IdViajeFP: viaje.IdViaje,
+                            CODIGOVIAJE: r
+                        })
+                    }
+                    ParticipanteViaje.bulkCreate(array)
+                        .then((postCreated)=>{
+                        res.json({status: 201})
+                        }).catch((err)=>{
+                        res.json({status: 500})
+                    });
+                })
+            })            
         })
-        
+        })
     }
 })
 

@@ -36,4 +36,4 @@ const Viaje = connection.sequelize.define(
   //run the sync command in order to create the database table
   //Post.sync();
   //then need to remove it, to avoid setting up the table every time
-module.exports = Auto;
+module.exports = Viaje;
