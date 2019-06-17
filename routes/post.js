@@ -206,6 +206,24 @@ route.post('/c_categoria', (req, res, next) => {
     }
 })
 
+/* ---------------------- Crear Viaje --------------------------- */
+
+route.post('/c_viaje', (req, res, next) => {
+    if(typeof(req.body.AUTO) != 'number' &&
+       typeof(req.body.CHOFER != 'number')){
+        res.status(400)
+        res.json({error: 'Bad Data'})
+    }else{
+        var IdAuto = req.body.AUTO
+        var IdPasajero =  Chofer.findOne({
+            attributes: ["IdPasajero"],
+            where: {IdChofer: req.body.CHOFER}
+        })
+        
+        
+    }
+})
+
 
 
 module.exports = route;
